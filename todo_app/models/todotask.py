@@ -21,8 +21,6 @@ class TodoTask(models.Model):
     active=fields.Boolean(default=True)
     islate=fields.Boolean(default=False)
 
-    def test(self):
-        print(datetime.now().strftime('%I:%M:%S')+timedelta(hours=2))
 
     @api.model
     def create(self,vals):
