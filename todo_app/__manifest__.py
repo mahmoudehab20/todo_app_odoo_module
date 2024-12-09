@@ -4,7 +4,7 @@
     'category':'',
     'version':'18.0.0.1.0',
     'depends':[
-        'base','mail','sale','account','sale_management'
+        'base','mail','sale','account','sale_management','stock'
     ],
     'data':[
         'security/ir.model.access.csv',
