@@ -111,10 +111,10 @@
         <field name="active">True</field>
     </record>
     
-    <record id="list_view_action" model="ir.actions.client">
+    <!-- <record id="list_view_action" model="ir.actions.client">
         <field name="name">Tasks List View</field>
         <field name="tag">todo_app.action_list_view</field> 
-    </record>
+    </record> -->
 
     <menuitem
         id="tasks_menu_item"
@@ -123,10 +123,10 @@
         action="todo_action"
     />
 
-    <menuitem
+    <!-- <menuitem
         id="list_view_action_menu_item"
         name="Task Owl"
         parent="all_tasks_menu"
         action="list_view_action"
-    />
+    /> -->
 </odoo>

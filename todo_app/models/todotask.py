@@ -1,5 +1,6 @@
 from odoo import models,fields,api
 from datetime import datetime,timedelta
+import random,string
 
 class TodoTask(models.Model):
     _name="todo.task"
@@ -59,3 +60,25 @@ class TimeSheet(models.Model):
     date=fields.Date()
     time=fields.Integer() 
     todo_task=fields.Many2one('todo.task')
+
+
+class Token(models.Model):
+    _name='token'
+    _description='Token'
+
+    token=fields.Char(default='new',readonly=True)
+    estimated_date=fields.Datetime(default=datetime.now()+timedelta(hours=2))
+
+    @api.model
+    def create(self,vals):
+        res=super(Token,self).create(vals)
+        if res.token=='new':
+            res.token=''.join(random.choices(string.ascii_letters,k=10))
+        return res
+
+    def check_token_date(self):
+        token_id=self.search([])
+        for rec in token_id:
+            if rec.estimated_date and rec.estimated_date > fields.Datetime.now():
+                rec.unlink()
+
