@@ -1,5 +1,10 @@
 <odoo>
+    <record id="real_state_groups" model="ir.module.category">
+        <field name="name">Real State Groups</field>
+    </record>
+
     <record id="property_manger_group" model="res.groups">
         <field name="name">Property Manager</field>
+        <field name="category_id" ref="app_one.real_state_groups"/>
     </record>
 </odoo>
