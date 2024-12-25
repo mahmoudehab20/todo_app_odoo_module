@@ -63,38 +63,62 @@ class TodoApi(http.Controller):
     #     res = request.env['ir.http'].session_info()
     #     return res
 
-    @http.route(
-        '/auth/logout',
-        auth="user", type="http", methods=['GET', 'POST'], csrf=False)
-    def Logout(self):
-        try:
-            request.session.logout(keep_db=True)
-        except exceptions as error:
-            return in_valid_response(error)
         
-    @http.route('/v1/todotask/login',type='http',auth='none',methods=["POST"],csrf=False)
-    def login(self):
-        args=request.httprequest.data.decode()
-        vals=json.loads(args)
-        try:
-            if(vals):
-                db=vals.get('db')
-                login=vals.get('login')
-                password=vals.get('password')
-                print(db,login,password,"data")
-                uid=http.request.session.authenticate("todo_app", "admin", "admin")             
-                return request.make_json_response({
-                    "message":"loged in successfully",
-                    "data":{
-                        "user_id":uid.id,
-                        "user_name":uid.name,
-                    }
-                },status=200)
+    # @http.route('/v1/todotask/login',type='http',auth='none',methods=["POST"],csrf=False)
+    # def login(self):
+    #     args=request.httprequest.data.decode()
+    #     vals=json.loads(args)
+    #     try:
+    #         if(vals):
+    #             db=vals.get('db')
+    #             login=vals.get('login')
+    #             password=vals.get('password')
+    #             print(db,login,password,"data")
+    #             uid=http.request.session.authenticate("todo_app", "admin", "admin")             
+    #             return request.make_json_response({
+    #                 "message":"loged in successfully",
+    #                 "data":{
+    #                     "user_id":uid.id,
+    #                     "user_name":uid.name,
+    #                 }
+    #             },status=200)
             
-        except Exception as error:
-            return request.make_json_response({
-                "message":error
-            },status=400)
+    #     except Exception as error:
+    #         return request.make_json_response({
+    #             "message":error
+    #         },status=400)
+
+    # @http.route('/auth/login',type="http",methods=['POST'],auth="none",csrf=False)
+    # def login(self):
+    #     args=request.httprequest.data.decode()
+    #     vals=json.loads(args)
+    #     try:
+    #         if vals:
+    #             db=vals.get('db')
+    #             username=vals.get('username')
+    #             password=vals.get('password')
+    #             if not username or not password:
+    #                 return in_valid_response("missing username or password")
+    #             user=request.env['res.users'].with_user(SUPERUSER_ID)
+    #             print(user,"data#####")
+    #             auth=user._login(db,username,password)
+    #             print(auth,"auth####")
+    #             if not user or not user._check_password(password):
+    #                 return in_valid_response("username or password are invalid!")
+    #             else:
+    #                 return valid_response("successfuly",{"user_id":user.id})
+    #     except Exception as error:
+    #         return in_valid_response(error)
+
+    # @http.route(
+    #     '/auth/logout',
+    #     auth="user", type="http", methods=['GET', 'POST'], csrf=False)
+    # def Logout(self):
+    #     try:
+    #         request.session.logout(keep_db=True)
+    #         return valid_response("successful")
+    #     except Exception as error:
+    #         return in_valid_response(error)
     
     @http.route("/v1/todotask/create",methods=['POST'],type='http',auth='none',csrf=False)
     def createSaleOrder(self):

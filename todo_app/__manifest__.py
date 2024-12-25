@@ -16,6 +16,9 @@
         'reports/sale_order_report.xml',
     ],
     'assets':{
+        'web.report_assets_common':[
+            'todo_app/static/src/fonts/font.css'
+        ]
         # 'web.assets_backend':[
         #     'todo_app/static/src/components/ListView/ListView.js',
         #     'todo_app/static/src/components/ListView/ListView.xml',

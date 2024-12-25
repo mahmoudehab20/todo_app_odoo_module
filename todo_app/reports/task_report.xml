@@ -12,10 +12,14 @@
     <data>
         <template id="task_report_template">
             <t t-call="web.html_container">
-                <t t-foreach="docs" t-as="doc">
+                <t t-foreach="docs" t-as="doc" >
                         <meta charset="UTF-8"/>
                         <link rel="stylesheet" href="http://localhost:8069/todo_app/static/src/css/todo_task_style.css"/>
-                        <!-- <style>
+                        <!-- <style> -->
+                        <!-- 
+                            *{
+                                font-family:'Courier New';
+                            }
                             header{
                                 text-align:center;
                             }
@@ -51,18 +55,19 @@
                                 padding:5px;
                                 border:2px solid black;
                                 text-align:center;
-                                }
-                                #timesheet th{
-                                    padding:2px;
-                                    border:2px solid black;
-                                    text-align:center;
-                                    }
-                                    #timesheet td{
-                                        padding:2px;
-                                        border:2px solid black;
-                                        text-align:center;
-                                        }
-                                        </style> -->
+                            }
+                            #timesheet th{
+                                padding:2px;
+                                border:2px solid black;
+                                text-align:center;
+                            }
+                            #timesheet td{
+                                padding:2px;
+                                border:2px solid black;
+                                text-align:center;
+                            }
+                            -->
+                        <!-- </style> -->
                         <img src="https://imgs.search.brave.com/JZw0_MWeWhZKu0hNBODzNpuy8UGoOuoN3fIbjjVM1w4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/bW9zLmNtcy5mdXR1/cmVjZG4ubmV0L1Qy/WlRiSzZSV0JIenFU/ZlhyQ0Z1NTYtMzIw/LTgwLmpwZw"/>
                         <t t-set="time" t-value="datetime.datetime.now()+datetime.timedelta(hours=2)"/>
                         <header>
