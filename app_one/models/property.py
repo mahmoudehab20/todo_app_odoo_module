@@ -52,7 +52,12 @@ class Property(models.Model):
 
     line_ids = fields.One2many('property.line', 'property_id')
 
-
+    def property_xlsx_report(self):
+        return {
+            'type':'ir.actions.act_url',
+            'url':f'/property/excel/report/{self.env.context.get("active_ids")}',
+            'target':'new'
+        }
 
     def check_expected_selling_date(self):
         property_ids = self.search([])
@@ -122,32 +127,22 @@ class Property(models.Model):
         if res.ref=='new':
             res.ref=res.env['ir.sequence'].next_by_code('property_seq')
         return res
-        #
-        # @api.model
-        # def _search(self, domain, offset=0, limit=None, order=None, access_rights_uid=None):
-        #     res = super(Property, self)._search(domain, offset=0, limit=None, order=None, access_rights_uid=None)
-        #     print('inside search method')
-        #     return res
-        #
-        # def write(self, vals):
-        #     res = super(Property, self).write(vals)
-        #     print('inside write method')
-        #     return res
-        #
-        # def unlink(self):
-        #     res = super(Property, self).unlink()
-        #     print('inside delete method')
-        #     return res
-
-
-
-    @api.model
-    def create(self, vals):
-        res = super(Property, self).create(vals)
-        if res.ref == 'New':
-            res.ref = self.env['ir.sequence'].next_by_code('property_seq')
-        return res
     
+    # @api.model
+    # def _search(self, domain, offset=0, limit=None, order=None, access_rights_uid=None):
+    #     res = super(Property, self)._search(domain, offset=0, limit=None, order=None, access_rights_uid=None)
+    #     print('inside search method')
+    #     return res
+    #
+    # def write(self, vals):
+    #     res = super(Property, self).write(vals)
+    #     print('inside write method')
+    #     return res
+    #
+    # def unlink(self):
+    #     res = super(Property, self).unlink()
+    #     print('inside delete method')
+    #     return res
 
     def create_history_record(self, old_state, new_state, reason=""):
         for rec in self:

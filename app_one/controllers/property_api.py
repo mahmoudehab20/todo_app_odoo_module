@@ -1,5 +1,5 @@
 import json
-from odoo import http
+from odoo import SUPERUSER_ID, http
 from odoo.http import request
 
 
@@ -44,3 +44,32 @@ class PropertyApi(http.Controller):
             return [{
                 "message": "Property has been created successfully",
             }]
+        
+    @http.route('/v1/sql',type='http',methods=['POST'],auth='none',csrf=False)
+    def sql_commands(self):
+        args=request.httprequest.data.decode()
+        vals=json.loads(args)
+        try:
+            if vals:
+                columns=','.join(vals.keys())
+                name=vals.get('name')
+                postcode=vals.get('postcode')
+                bedrooms=vals.get('bed_rooms')
+                cr=request.env.cr
+                query=f"""INSERT INTO property ({columns}) VALUES ('{name}','{postcode}',{bedrooms}) RETURNING id,{columns};"""
+                cr.execute(query)
+                res=cr.fetchone()
+                return request.make_json_response({
+                    "message": "SQL query executed successfully",
+                    "data":{
+                        "id":res[0],
+                        "name":res[1],
+                        "postcode":res[2],
+                        "bedrooms":res[3],
+                    }
+                },status=200)
+        
+        except Exception as error:
+            return request.make_json_response({
+                "message": error,
+            },status=400)
