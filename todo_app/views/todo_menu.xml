@@ -4,6 +4,9 @@
         <field name="model">todo.task</field>
         <field name="arch" type="xml">
             <list multi_edit="1" create="1" edit="1" delete="1" class="header_custom" decoration-danger="(islate)">
+                <header>
+                    <button name="download_xlsx_task_report" type="object" string="Download Excel File" class="btn-primary"/>
+                </header>
                 <field name="name"/>
                 <field name="active"/>
                 <field name="due_date"/>

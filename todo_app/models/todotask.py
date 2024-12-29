@@ -23,6 +23,13 @@ class TodoTask(models.Model):
     islate=fields.Boolean(default=False)
 
 
+    def download_xlsx_task_report(self):
+        return({
+            'type':'ir.actions.act_url',
+            'url':f"/todotask/excel/report/{self.env.context.get("active_ids")}",
+            'target':'new'
+        })
+
     @api.model
     def create(self,vals):
         res=super(TodoTask,self).create(vals)
@@ -81,4 +88,3 @@ class Token(models.Model):
         for rec in token_id:
             if rec.estimated_date and rec.estimated_date > fields.Datetime.now():
                 rec.unlink()
-

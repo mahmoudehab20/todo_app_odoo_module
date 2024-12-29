@@ -301,8 +301,7 @@ class TodoApi(http.Controller):
                     payment_register=request.env['account.payment.register'].with_user(SUPERUSER_ID).with_context({"active_model":"account.move",
                                                                                                                    "active_ids":vals.get('invoice_id')})
                     payment_register.create({"amount":vals.get('amount')}).action_create_payments()
-                    invoice_payment=request.env['account.payment'].with_user(SUPERUSER_ID).browse(vals.get('invoice_id'))
-                    print(invoice_payment)
+                    request.env['account.payment'].with_user(SUPERUSER_ID).browse(vals.get('invoice_id'))
                     return valid_response("payment created successfully!")
                 else:
                     return in_valid_response("invoice id is required!")
@@ -310,3 +309,5 @@ class TodoApi(http.Controller):
                 return in_valid_response("you should give some values")
         except Exception as error:
             return in_valid_response(error)
+
+
