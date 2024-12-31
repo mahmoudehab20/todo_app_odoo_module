@@ -74,7 +74,6 @@ class Property(models.Model):
         for rec in self:
             rec.diff = rec.selling_price - rec.expected_price
 
-    #
     # @api.onchange('expected_price', 'owner_id.phone')
     # def _onchange_expected_price(self):
     #     for rec in self:
@@ -103,7 +102,6 @@ class Property(models.Model):
         for rec in self:
             rec.create_history_record(rec.state, 'closed')
             rec.state = 'closed'
-
 
     def action(self):
         print(self.env['owner'].search([]))

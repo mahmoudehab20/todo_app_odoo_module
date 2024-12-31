@@ -30,8 +30,37 @@ class PropertyApi(http.Controller):
 
     @http.route("/v1/property/<int:property_id>", methods=["PUT"], type="http", auth="none", csrf=False)
     def update_property(self, property_id):
-        property_id = request.env['property'].sudo().search([('id', '=', property_id)])
-        print(property_id)
+        args=request.httprequest.data.decode()
+        vals = json.loads(args)
+        try:
+            property_id = request.env['property'].sudo().browse(property_id)
+            if not property_id:
+                return request.make_json_response({
+                    "message": "Property not found",
+                },status=400)
+            property_id.write({
+                'name': vals.get('name'),
+                'description': vals.get('description'),
+                'postcode':vals.get('postcode'),
+                'date_availability':vals.get('date_availability'),
+                'expected_selling_date':vals.get('expected_selling_date'),
+                'expected_price':vals.get('expected_price'),
+                'selling_price':vals.get('selling_price'),
+                'bed_rooms':vals.get('bed_rooms'),
+                'living_area':vals.get('living_area'),
+                'facades':vals.get('facades')             
+            })
+            return request.make_json_response({
+                "message": "Property has been updated successfully",
+                "data":{
+                    "id": property_id.id,
+                    "name": property_id.name
+                }
+            },status=200)
+        except Exception as error:
+            return request.make_json_response({
+                "message": error,
+            },status=400)
 
 
 
@@ -73,3 +102,19 @@ class PropertyApi(http.Controller):
             return request.make_json_response({
                 "message": error,
             },status=400)
+        
+    @http.route('/v1/property/<int:property_id>', methods=['GET'],type="http",auth="none",csrf=False)
+    def read_property(self,property_id):
+        property_id=request.env['property'].with_user(SUPERUSER_ID).search([("id",'=',property_id)])
+        if property_id:
+            return request.make_json_response({
+                "data":{
+                    "property_id":property_id.id,
+                    "name":property_id.name,
+                }
+            },status=200)
+        else:
+            return request.make_json_response({
+                "message": "Property not found"
+            },status=400)
+                                              
